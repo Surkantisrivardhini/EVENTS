@@ -1,5 +1,7 @@
 # Ignore all HTML pages inside public
 public/*.html
+!public/details.html
+!public/payment.html
 
 # Ignore Node dependencies
 node_modules/
