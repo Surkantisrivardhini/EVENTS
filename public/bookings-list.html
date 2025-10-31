@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bookings List | Event Management</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Event Management</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="upcoming.html">Upcoming</a>
+      <a href="previous.html">Previous</a>
+      <a href="bookings-list.html">Bookings</a>
+      <a href="login.html">Login/Signup</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>All Bookings</h2>
+    <table id="bookingsTable" border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Event</th>
+          <th>Customer</th>
+          <th>Venue</th>
+          <th>Guests</th>
+          <th>Theme</th>
+          <th>Requests</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+
+  <footer>
+    <p>📞 +91 82576 80862 | ✉️ surkantisrivardhini@gmail.com | 📍 Hyderabad, India</p>
+  </footer>
+
+  <script>
+    async function loadBookings() {
+      const res = await fetch("/api/bookings");
+      const bookings = await res.json();
+      const tbody = document.querySelector("#bookingsTable tbody");
+      tbody.innerHTML = bookings.map(b => `
+        <tr>
+          <td>${b.id}</td>
+          <td>${b.eventName}</td>
+          <td>${b.customerName}</td>
+          <td>${b.venue}</td>
+          <td>${b.guests}</td>
+          <td>${b.theme}</td>
+          <td>${b.requests}</td>
+          <td>${b.date}</td>
+        </tr>
+      `).join("");
+    }
+    loadBookings();
+  </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Event Categories | Event Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    header {
+      background-color: #d0f0c0;
+      padding: 15px;
+    }
+    nav a {
+      margin: 10px;
+      color: #2b4c3f;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    footer {
+      background-color: #d0f0c0;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .card img {
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="d-flex justify-content-between align-items-center">
+    <h1 style="color:#2b4c3f;margin-left:20px;">Event Management</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="upcoming.html">Upcoming</a>
+      <a href="previous.html">Previous</a>
+      <a href="bookings-list.html">Bookings</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container text-center mt-4">
+    <h3 id="welcome-text" class="text-success"></h3>
+  </div>
+
+  <main class="container py-5">
+    <h2 class="text-center mb-4" style="color:#2b4c3f;">Event Categories</h2>
+    <div id="event-grid" class="row g-4"></div>
+  </main>
+
+  <footer>
+    <p>📞 +91 82476 80862 | ✉️ surkantisrivardhini@gmail.com | 📍 Hyderabad, India</p>
+  </footer>
+
+  <script>
+    // Load session info
+    fetch("/api/session")
+      .then((r) => r.json())
+      .then((data) => {
+        if (!data.user) {
+          window.location.href = "/login.html";
+        } else {
+          document.getElementById("welcome-text").innerText = `Welcome, ${data.user.name}!`;
+        }
+      });
+
+    // Load event list
+    fetch("/api/events")
+      .then((r) => r.json())
+      .then((events) => {
+        const grid = document.getElementById("event-grid");
+        grid.innerHTML = events
+          .map(
+            (ev) => `
+            <div class="col-md-4">
+              <div class="card shadow-sm">
+                <img src="${ev.img}" alt="${ev.name}" class="card-img-top" />
+                <div class="card-body">
+                  <h5 class="card-title">${ev.name}</h5>
+                  <p class="card-text">${ev.description}</p>
+                  <p><strong>Date:</strong> ${ev.date}</p>
+                  <p><strong>Location:</strong> ${ev.location}</p>
+                  <button class="btn btn-success" onclick="viewDetails('${ev.id}')">View Details</button>
+                </div>
+              </div>
+            </div>
+          `
+          )
+          .join("");
+      });
+
+    function viewDetails(id) {
+      localStorage.setItem("selectedEventId", id);
+      window.location.href = "booking.html";
+    }
+  </script>
+</body>
+</html>
