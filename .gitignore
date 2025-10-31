@@ -1,19 +1,27 @@
-# Ignore all HTML pages inside public
+# Ignore all HTML files inside public except details.html and payment.html
 public/*.html
-!public/details.html
-!public/payment.html
-
-# Ignore Node dependencies
+# Node modules (automatically generated)
 node_modules/
-npm-debug.log
-yarn-error.log
 
-# Ignore environment & system files
+# Environment variables (if you ever use dotenv)
 .env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# System files
 .DS_Store
+Thumbs.db
 
-# Ignore build caches
-dist/
-.cache/
+# Data files (local user data, bookings, etc.)
+data/*.json
 
+# Optional: compiled or temporary files
+*.tmp
+*.swp
 
+# Backup files
+*.bak
