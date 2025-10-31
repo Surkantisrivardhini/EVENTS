@@ -1,3 +1,6 @@
+# Ignore all HTML pages inside public
+public/*.html
+
 # Ignore Node dependencies
 node_modules/
 npm-debug.log
@@ -10,3 +13,5 @@ yarn-error.log
 # Ignore build caches
 dist/
 .cache/
+
+
